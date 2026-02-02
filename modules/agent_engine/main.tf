@@ -3,17 +3,8 @@ data "google_project" "project" {
   project_id = var.project_id
 }
 
-# Network Attachment for Private Service Connect (PSC)
-resource "google_compute_network_attachment" "this" {
-  name                  = "${var.display_name}-nw-attachment"
-  region                = var.region
-  project               = var.project_id
-  connection_preference = "ACCEPT_MANUAL"
-  subnetworks           = [var.subnetwork_self_link]
-}
-
-# Grant Vertex AI Service Agent permission to use the Network Attachment
-# Constructed using the project number retrieved from the data source
+# Grant Vertex AI Service Agent permission to use the EXTERNAL Network Attachment
+# We use the name/ID from the variable to target the correct resource
 resource "google_project_iam_member" "vertex_ai_psc_user" {
   project = var.project_id
   role    = "roles/compute.networkAdmin"
@@ -41,8 +32,9 @@ resource "google_vertex_ai_reasoning_engine" "this" {
           value = env.value
         }
       }
+      # Using the externally provided Network Attachment ID
       psc_interface_config {
-        network_attachment = google_compute_network_attachment.this.id
+        network_attachment = var.network_attachment_id
       }
     }
   }
