@@ -5,5 +5,5 @@ resource "google_compute_network_attachment" "this" {
   description           = var.description
   connection_preference = var.connection_preference
 
-  subnetworks = var.subnetwork_self_links
+  subnetworks = [var.subnetwork_self_link]
 }

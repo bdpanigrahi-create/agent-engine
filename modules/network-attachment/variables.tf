@@ -24,7 +24,7 @@ variable "connection_preference" {
   description = "The connection preference of the network attachment. Likely ACCEPT_MANUAL or ACCEPT_AUTOMATIC"
 }
 
-variable "subnetwork_self_links" {
-  type        = list(string)
-  description = "List of subnetwork URLs to be associated with this attachment"
+variable "subnetwork_self_link" {
+  type        = string
+  description = "subnetwork self link"
 }

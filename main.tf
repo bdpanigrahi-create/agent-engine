@@ -70,7 +70,7 @@ module "psc-network-attachment" {
   region     = "us-central1"
   
   # Fetching the private subnet from the VPC module
-  subnetwork_self_links = [module.primary-network-infrastructure.subnets_self_links[1]]
+  subnetwork_self_links = module.primary-network-infrastructure.subnets_self_links[1]
 }
 
 # 4. Vertex AI Reasoning Engine Module
